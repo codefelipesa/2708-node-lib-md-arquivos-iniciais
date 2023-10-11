@@ -1,3 +1,11 @@
+import fs from "fs"
 import chalk from "chalk";
 
-console.log(chalk.bgBlue('AAaaaaaaaaaaaaa zé da manga'))
+function getArchive (diretorioDoArquivo){
+    const encoding = 'utf-8'
+    fs.readFile(diretorioDoArquivo, encoding, (_, texto) => {
+        console.log(chalk.bgBlue(texto))
+    } )
+}
+
+getArchive('./arquivos/texto.md')
