@@ -8,7 +8,7 @@ function extraiLinks (texto) {
     const capturados = [...texto.matchAll(regex)].map(capturado => ({ // O matchAll retorna um iterador com todos os resultados da correspôndencia
        [ capturado[1]] : [capturado[2]]
     }))
-    console.log(capturados)
+    return capturados.length !== 0 ? capturados : chalk.yellow("Não há links nesse arquivo")
 }
 
 extraiLinks(textoTeste)
@@ -18,13 +18,16 @@ async function pegaArquivo(diretorioDoArquivo){
     try{
     const encoding = 'utf-8'
     const texto = await fs.promises.readFile(diretorioDoArquivo,encoding)
-    console.log(texto)
+    return extraiLinks(texto)
 } catch(erro){
     trataErro(erro)
 }}
+
+
 
 function trataErro(erro){
      console.log(chalk.red(erro))
      throw new Error(chalk.red(erro.code, 'Não há arquivo no diretório')) // Lançando a instância do erro
  }
  
+export default pegaArquivo;
